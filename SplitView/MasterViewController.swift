@@ -27,9 +27,21 @@ class MasterViewController: UITableViewController {
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
     }
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastItem = arrayNumber.count - 1
+        if indexPath.row == lastItem {
+            loadMore()
+        }
+    }
+    func loadMore() {
+        let lastItem = arrayNumber.last!
+        let newNum = lastItem + 1
+        arrayNumber.append(newNum)
+        tableView.reloadData()
+    }
     @objc func pullToRefresh() {
-        let refreshNum = Array(90...100)
-        for i in refreshNum.reversed() {
+        let addMoreData = Array(90...100)
+        for i in addMoreData.reversed() {
             arrayNumber.append(i)
         }
         tableView.reloadData()
